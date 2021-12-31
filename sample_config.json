@@ -3,5 +3,7 @@
   "company_account": "company_account",
   "user_password": "user_password",
   "merchant_account": "merchant_account", 
-  "start_date": "2020-01-01T00:00:00Z"
+  "start_date": "2020-01-01",
+  "batch_number": 123,
+  "schemaless" : true
 }

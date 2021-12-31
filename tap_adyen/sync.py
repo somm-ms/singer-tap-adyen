@@ -20,7 +20,8 @@ def sync(  # noqa: WPS210
         adyen: Adyen,
         state: dict,
         catalog: Catalog,
-        default_state: dict
+        default_state: dict,
+        schemaless: bool
 ) -> None:
     """Sync data from tap source.
 
@@ -78,7 +79,7 @@ def sync(  # noqa: WPS210
             cleaner: Optional[Callable] = CLEANERS.get(stream.tap_stream_id)
 
             # Retrieve the csv
-            for row in adyen.retrieve_csv(csv_url, cleaner):
+            for row in adyen.retrieve_csv(csv_url, None if schemaless else cleaner):
                 # Write a row to the stream
                 singer.write_record(
                     stream.tap_stream_id,

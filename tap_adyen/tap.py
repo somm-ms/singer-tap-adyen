@@ -60,6 +60,7 @@ def main() -> None:
             "start_date": args.config.get("start_date", None),
             "batch_number": args.config.get("batch_number", None),
         },
+        args.config.get("schemaless", False)
     )
 
 
