@@ -23,7 +23,7 @@ This tap:
 
 ### Step 2: Configure
 
-Create a file called `adyen_config.json` in your working directory, following [sample_config.json](sample_config.json). The required parameters are the `report_user`, `company_account`, `user_password` and `merchant_account`. The `test` parameter determines whether to use the test or live environment.
+Create a file called `adyen_config.json` in your working directory, following [sample_config.json](sample_config.json). The required parameters are the `report_user`, `company_account`, `user_password` and `merchant_account`. The `test` parameter determines whether to use the test or live environment. The `start_date` and `batch_number`are used to create default state file if not provided. The `schemaless` parameter can be used to export data without any transformation (cleaning, mapping...)
 
 This requires a `state.json` file to let the tap know from when to retrieve data. For example:
 ```
