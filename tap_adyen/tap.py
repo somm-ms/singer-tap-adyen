@@ -11,14 +11,13 @@ from tap_adyen.adyen import Adyen
 from tap_adyen.discover import discover
 from tap_adyen.sync import sync
 
-VERSION: str = pkg_resources.get_distribution('tap-adyen').version
+VERSION: str = pkg_resources.get_distribution("tap-adyen").version
 LOGGER: logging.RootLogger = get_logger()
 REQUIRED_CONFIG_KEYS: tuple = (
-    'start_date',
-    'report_user',
-    'company_account',
-    'user_password',
-    'merchant_account',
+    "report_user",
+    "company_account",
+    "user_password",
+    "merchant_account",
 )
 
 
@@ -28,7 +27,7 @@ def main() -> None:
     # Parse command line arguments
     args: Namespace = utils.parse_args(REQUIRED_CONFIG_KEYS)
 
-    LOGGER.info(f'>>> Running tap-adyen v{VERSION}')
+    LOGGER.info(f">>> Running tap-adyen v{VERSION}")
 
     # If discover flag was passed, run discovery mode and dump output to stdout
     if args.discover:
@@ -46,15 +45,23 @@ def main() -> None:
 
     # Initialize Adyen client
     adyen: Adyen = Adyen(
-        args.config['report_user'],
-        args.config['company_account'],
-        args.config['user_password'],
-        args.config['merchant_account'],
-        args.config.get('test', False),
+        args.config["report_user"],
+        args.config["company_account"],
+        args.config["user_password"],
+        args.config["merchant_account"],
+        args.config.get("test", False),
     )
 
-    sync(adyen, args.state, catalog, args.config['start_date'])
+    sync(
+        adyen,
+        args.state,
+        catalog,
+        {
+            "start_date": args.config.get("start_date", None),
+            "batch_number": args.config.get("batch_number", None),
+        },
+    )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
