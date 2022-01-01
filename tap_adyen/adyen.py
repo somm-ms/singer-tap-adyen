@@ -247,6 +247,7 @@ class Adyen(object):  # noqa: WPS230
     def settlement_details(
         self,
         batch_number: int,
+        initial_full_table_complete: bool,
     ) -> Generator[str, None, None]:
         """Get the settlement details report URLs.
 
