@@ -1,7 +1,7 @@
 """Tools."""
 # -*- coding: utf-8 -*-
 
-from datetime import timedelta
+from datetime import timedelta, datetime
 from typing import Optional, Union
 
 from dateutil.parser import parse as parse_date
@@ -16,7 +16,7 @@ def clear_currently_syncing(state: dict) -> dict:
     Returns:
         dict -- New state file
     """
-    return state.pop('currently_syncing', None)
+    return state.pop("currently_syncing", None)
 
 
 def get_stream_state(state: dict, tap_stream_id: str) -> dict:
@@ -30,7 +30,7 @@ def get_stream_state(state: dict, tap_stream_id: str) -> dict:
         dict -- The state of the stream
     """
     return state.get(
-        'bookmarks',
+        "bookmarks",
         {},
     ).get(tap_stream_id)
 
@@ -48,15 +48,15 @@ def get_bookmark_value(
     Returns:
         Optional[Union[str, int]] -- [description]
     """
-    if stream_name in {'dispute_transaction_details', 'payment_accounting'}:
+    if stream_name in {"dispute_transaction_details", "payment_accounting"}:
         # Return the date +1 day
         return str(
-            parse_date(
-                csv_url.rstrip('.csv'),
-                fuzzy=True,
-            ).date() + timedelta(days=1),
+            datetime.strptime(
+                csv_url.rstrip(".csv").split("/")[-1][-10:], "%Y_%m_%d"
+            ).date()
+            + timedelta(days=1)
         )
-    elif stream_name == 'settlement_details':
+    elif stream_name == "settlement_details":
         # Return the batch number + 1
-        return int(csv_url.rstrip('.csv').rpartition('_')[2]) + 1
+        return int(csv_url.rstrip(".csv").rpartition("_")[2]) + 1
     return None
