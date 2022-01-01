@@ -64,6 +64,13 @@ def sync(  # noqa: WPS210
 
         LOGGER.info(f"Stream state: {stream_state}")
 
+        # Write the schema
+        singer.write_schema(
+            stream_name=stream.tap_stream_id,
+            schema=stream.schema.to_dict(),
+            key_properties=stream.key_properties,
+        )
+
         # Every stream has a corresponding method in the Adyen object e.g.:
         # The stream: settlement_details will call: adyen.settlement_details
         tap_urls: Callable = getattr(adyen, stream.tap_stream_id)
@@ -72,19 +79,7 @@ def sync(  # noqa: WPS210
         # used as kwargs for the method.
         # E.g. if the state of the stream has a key 'start_date', it will be
         # used in the method as start_date='2021-01-01T00:00:00+0000'
-        first_run = True
         for csv_url in tap_urls(**stream_state):
-
-            # Write the schema
-            # TODO : fix some loader when receive schema without any rows remove state for no reason
-            if first_run:
-                singer.write_schema(
-                    stream_name=stream.tap_stream_id,
-                    schema=stream.schema.to_dict(),
-                    key_properties=stream.key_properties,
-                )
-                first_run = False
-
             # Retrieve the cleaner function
             cleaner: Optional[Callable] = CLEANERS.get(stream.tap_stream_id)
 
@@ -105,6 +100,12 @@ def sync(  # noqa: WPS210
 
             # Update bookmark
             update_bookmark(stream, bookmark, state)
+
+        # Clear currently syncing
+        tools.clear_currently_syncing(state)
+
+        # Write the bootmark
+        singer.write_state(state)
 
 
 def update_bookmark(
@@ -136,9 +137,3 @@ def update_bookmark(
             STREAMS[stream.tap_stream_id]["bookmark"],
             bookmark,
         )
-
-    # Clear currently syncing
-    tools.clear_currently_syncing(state)
-
-    # Write the bootmark
-    singer.write_state(state)
