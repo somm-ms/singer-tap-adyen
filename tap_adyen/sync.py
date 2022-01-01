@@ -17,11 +17,7 @@ LOGGER: logging.RootLogger = singer.get_logger()
 
 
 def sync(  # noqa: WPS210
-        adyen: Adyen,
-        state: dict,
-        catalog: Catalog,
-        default_state: dict,
-        schemaless: bool
+    adyen: Adyen, state: dict, catalog: Catalog, default_state: dict, schemaless: bool
 ) -> None:
     """Sync data from tap source.
 
@@ -32,14 +28,14 @@ def sync(  # noqa: WPS210
         start_date {str} -- Start date
     """
     # For every stream in the catalog
-    LOGGER.info('Sync')
-    LOGGER.debug('Current state:\n{state}')
+    LOGGER.info("Sync")
+    LOGGER.debug("Current state:\n{state}")
 
     # Only selected streams are synced, whether a stream is selected is
     # determined by whether the key-value: "selected": true is in the schema
     # file.
     for stream in catalog.get_selected_streams(state):
-        LOGGER.info(f'Syncing stream: {stream.tap_stream_id}')
+        LOGGER.info(f"Syncing stream: {stream.tap_stream_id}")
 
         # Update the current stream as active syncing in the state
         singer.set_currently_syncing(state, stream.tap_stream_id)
@@ -52,11 +48,21 @@ def sync(  # noqa: WPS210
 
         # If State not found, create state based on default state
         if stream_state is None:
-            LOGGER.info(f'Stream state not found, create one based on default state : {default_state}')
-            stream_state = {STREAMS[stream.tap_stream_id]['bookmark']: default_state.get(STREAMS[stream.tap_stream_id]['bookmark'], None)}
+            LOGGER.info(
+                f"Stream state not found, create one based on default state : {default_state}"
+            )
+            stream_state = {
+                STREAMS[stream.tap_stream_id]["bookmark"]: default_state.get(
+                    STREAMS[stream.tap_stream_id]["bookmark"], None
+                )
+            }
 
+        # Set initial_full_table_complete
+        stream_state["initial_full_table_complete"] = stream_state.get(
+            "initial_full_table_complete", False
+        )
 
-        LOGGER.info(f'Stream state: {stream_state}')
+        LOGGER.info(f"Stream state: {stream_state}")
 
         # Write the schema
         singer.write_schema(
@@ -98,9 +104,9 @@ def sync(  # noqa: WPS210
 
 
 def update_bookmark(
-        stream: CatalogEntry,
-        bookmark: Optional[Union[str, int]],
-        state: dict,
+    stream: CatalogEntry,
+    bookmark: Optional[Union[str, int]],
+    state: dict,
 ) -> None:
     """Update the bookmark.
 
@@ -111,11 +117,19 @@ def update_bookmark(
     """
     # Retrieve the value of the bookmark
     if bookmark:
+        # Set initial_full_table_complete
+        singer.write_bookmark(
+            state,
+            stream.tap_stream_id,
+            "initial_full_table_complete",
+            True,
+        )
+
         # Save the bookmark to the state
         singer.write_bookmark(
             state,
             stream.tap_stream_id,
-            STREAMS[stream.tap_stream_id]['bookmark'],
+            STREAMS[stream.tap_stream_id]["bookmark"],
             bookmark,
         )
 
