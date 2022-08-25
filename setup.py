@@ -11,9 +11,9 @@ setup(
     classifiers=['Programming Language :: Python :: 3 :: Only'],
     py_modules=['tap_adyen'],
     install_requires=[
-        'httpx[http2]~=0.16.1',
-        'python-dateutil~=2.8.1',
-        'singer-python~=5.10.0',
+        'httpx[http2]==0.23.0',
+        'python-dateutil==2.8.2',
+        'singer-python==5.12.2',
     ],
     entry_points="""
         [console_scripts]
