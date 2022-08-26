@@ -6,6 +6,7 @@ from csv import DictReader
 from datetime import datetime, timedelta
 from types import MappingProxyType
 from typing import Callable, Generator, Optional
+from time import sleep
 
 import httpx
 import singer
@@ -334,11 +335,25 @@ class Adyen(object):  # noqa: WPS230
         self.logger.info(f"Downloading report: {csv_url}")
 
         # Get Request to get the csv in binary format
-        response: httpx._models.Response = self.client.get(  # noqa: WPS437
-            csv_url,
-            auth=(self.report_user, self.user_password),
-            headers=dict(HEADERS),
-        )
+        sleep_time = 2
+        num_retries = 4
+        for x in range(0, num_retries):  
+            try:
+                response: httpx._models.Response = self.client.get(  # noqa: WPS437
+                csv_url,
+                auth=(self.report_user, self.user_password),
+                headers=dict(HEADERS),
+                )
+                str_error = None
+            except Exception as e:
+                str_error = str(e)
+                self.logger.info(f"Error while fetchin client - {str_error}")
+
+            if str_error:
+                sleep(sleep_time)  # wait before trying to fetch the data again
+                sleep_time *= 2  # Implement your backoff algorithm here i.e. exponential backoff
+            else:
+                break
 
         # If the status is not 200 raise the status
         if response.status_code != 200:  # noqa: WPS432
