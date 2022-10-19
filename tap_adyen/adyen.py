@@ -8,7 +8,7 @@ from types import MappingProxyType
 from typing import Callable, Generator, Optional
 from time import sleep
 
-import httpx
+import requests
 import singer
 
 API_SCHEME: str = "https://"
@@ -55,7 +55,7 @@ class Adyen(object):  # noqa: WPS230
         self.test: bool = test
 
         # Setup reusable web client
-        self.client: httpx.Client = httpx.Client(http2=True)
+        self.client: requests.Session = requests.session()
 
         # Setup logger
         self.logger: logging.RootLogger = singer.get_logger()
@@ -108,7 +108,7 @@ class Adyen(object):  # noqa: WPS230
             )
 
             # Perform a HEAD request on the report url
-            response: httpx._models.Response = self._head_request(url)  # noqa: WPS437
+            response: requests.Response = self._head_request(url)  # noqa: WPS437
 
             # The report with the batch number exists
             if response.status_code == 200:  # noqa: WPS432
@@ -199,7 +199,7 @@ class Adyen(object):  # noqa: WPS230
             )
 
             # Perform a HEAD request on the report url
-            response: httpx._models.Response = self._head_request(url)  # noqa: WPS437
+            response: requests.Response = self._head_request(url)  # noqa: WPS437
 
             # The report with the batch number exists
             if response.status_code == 200:  # noqa: WPS432
@@ -286,7 +286,7 @@ class Adyen(object):  # noqa: WPS230
             )
 
             # Perform a HEAD request on the report url
-            response: httpx._models.Response = self._head_request(url)  # noqa: WPS437
+            response: requests.Response = self._head_request(url)  # noqa: WPS437
 
             # The report with the batch number exists
             if response.status_code == 200:  # noqa: WPS432
@@ -335,25 +335,12 @@ class Adyen(object):  # noqa: WPS230
         self.logger.info(f"Downloading report: {csv_url}")
 
         # Get Request to get the csv in binary format
-        sleep_time = 2
-        num_retries = 4
-        for x in range(0, num_retries):  
-            try:
-                response: httpx._models.Response = self.client.get(  # noqa: WPS437
-                csv_url,
-                auth=(self.report_user, self.user_password),
-                headers=dict(HEADERS),
-                )
-                str_error = None
-            except Exception as e:
-                str_error = str(e)
-                self.logger.info(f"Error while fetchin client - {str_error}")
 
-            if str_error:
-                sleep(sleep_time)  # wait before trying to fetch the data again
-                sleep_time *= 2  # Implement your backoff algorithm here i.e. exponential backoff
-            else:
-                break
+        response: requests.Response = self.client.get(  # noqa: WPS437
+            csv_url,
+            auth=(self.report_user, self.user_password),
+            headers=dict(HEADERS),
+        )
 
         # If the status is not 200 raise the status
         if response.status_code != 200:  # noqa: WPS432
@@ -379,14 +366,14 @@ class Adyen(object):  # noqa: WPS230
     def _head_request(
         self,
         url: str,
-    ) -> httpx._models.Response:  # noqa: WPS437
+    ) -> requests.Response:  # noqa: WPS437
         """Perform a HEAD request.
 
         Arguments:
             url {str} -- Input url
 
         Returns:
-            httpx._models.Response -- Response of HEAD request
+            requests.Response -- Response of HEAD request
         """
         return self.client.head(
             url,
