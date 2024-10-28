@@ -164,18 +164,6 @@
 				"string"
 			]
 		},
-		"network_token_available": {
-			"type": [
-				"null",
-				"boolean"
-			]
-		},
-		"Network Token Used": {
-			"type": [
-				"null",
-				"boolean"
-			]
-		},
 		"reserved3": {
 			"type": [
 				"null",
