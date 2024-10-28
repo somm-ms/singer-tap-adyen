@@ -9,7 +9,7 @@
 		"id": {
 			"type": [
 				"null",
-				"string"
+				"number"
 			],
 			"format": "integer"
 		},
@@ -65,7 +65,7 @@
 		"main_amount": {
 			"type": [
 				"null",
-				"string"
+				"number"
 			]
 		},
 		"record_type": {
@@ -83,19 +83,19 @@
 		"received": {
 			"type": [
 				"null",
-				"string"
+				"number"
 			]
 		},
 		"authorised": {
 			"type": [
 				"null",
-				"string"
+				"number"
 			]
 		},
 		"captured": {
 			"type": [
 				"null",
-				"string"
+				"number"
 			]
 		},
 		"settlement_currency": {
@@ -107,31 +107,31 @@
 		"payable": {
 			"type": [
 				"null",
-				"string"
+				"number"
 			]
 		},
 		"commission": {
 			"type": [
 				"null",
-				"string"
+				"number"
 			]
 		},
 		"markup": {
 			"type": [
 				"null",
-				"string"
+				"number"
 			]
 		},
 		"scheme_fees": {
 			"type": [
 				"null",
-				"string"
+				"number"
 			]
 		},
 		"interchange": {
 			"type": [
 				"null",
-				"string"
+				"number"
 			]
 		},
 		"processing_fee_currency": {
@@ -143,7 +143,7 @@
 		"processing_fee": {
 			"type": [
 				"null",
-				"string"
+				"number"
 			]
 		},
 		"user_name": {
