@@ -82,7 +82,8 @@ def clean_row(row: dict, mapping: dict) -> dict:
 
         # Retrieve the new mapping or use the original
         new_mapping: str = key_mapping.get('map') or key
-
+        if key not in row.keys():
+            continue
         # Convert the value
         cleaned[new_mapping] = to_type_or_null(
             row[key],
