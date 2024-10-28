@@ -112,3 +112,6 @@ state.json
 test_adyen_config.json
 
 .idea
+adyen_config.json
+sample_state.json
+sample_state.json
