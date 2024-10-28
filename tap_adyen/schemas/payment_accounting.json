@@ -6,181 +6,223 @@
 	],
 	"additionalProperties": true,
 	"properties": {
-  "id": {
-    "type": "number",
-    "format": "integer"
-  },
-  "company_account": {
-    "type": "string"
-  },
-  "merchant_account": {
-    "type": "string"
-  },
-  "psp_reference": {
-    "type": "string"
-  },
-  "merchant_reference": {
-    "type": "string"
-  },
-  "payment_method": {
-    "type": [
-      "null",
-      "string"
-    ]
-  },
-  "booking_date": {
-    "type": "string",
-    "format": "date-time"
-  },
-  "timezone": {
-    "type": "string"
-  },
-  "main_currency": {
-    "type": "string"
-  },
-  "main_amount": {
-    "type": "number"
-  },
-  "record_type": {
-    "type": "string"
-  },
-  "payment_currency": {
-    "type": "string"
-  },
-  "received": {
-    "type": "number"
-  },
-  "authorised": {
-    "type": "number"
-  },
-  "captured": {
-    "type": "number"
-  },
-  "settlement_currency": {
-    "type": [
-      "null",
-      "string"
-    ]
-  },
-  "payable": {
-    "type": [
-      "null",
-      "number"
-    ]
-  },
-  "commission": {
-    "type": [
-      "null",
-      "number"
-    ]
-  },
-  "markup": {
-    "type": [
-      "null",
-      "number"
-    ]
-  },
-  "scheme_fees": {
-    "type": [
-      "null",
-      "number"
-    ]
-  },
-  "interchange": {
-    "type": [
-      "null",
-      "number"
-    ]
-  },
-  "processing_fee_currency": {
-    "type": [
-      "null",
-      "string"
-    ]
-  },
-  "processing_fee": {
-    "type": [
-      "null",
-      "number"
-    ]
-  },
-  "user_name": {
-    "type": [
-      "null",
-      "string"
-    ]
-  },
-  "payment_method_variant": {
-    "type": [
-      "null",
-      "string"
-    ]
-  },
-  "modification_merchant_reference": {
-    "type": [
-      "null",
-      "string"
-    ]
-  },
-  "network_token_available": {
-    "type": [
-      "null",
-      "boolean"
-    ]
-  },
-  "network_token_used": {
-    "type": [
-      "null",
-      "boolean"
-    ]
-  },
-  "reserved3": {
-    "type": [
-      "null",
-      "string"
-    ]
-  },
-  "reserved4": {
-    "type": [
-      "null",
-      "string"
-    ]
-  },
-  "reserved5": {
-    "type": [
-      "null",
-      "string"
-    ]
-  },
-  "reserved6": {
-    "type": [
-      "null",
-      "string"
-    ]
-  },
-  "reserved7": {
-    "type": [
-      "null",
-      "string"
-    ]
-  },
-  "reserved8": {
-    "type": [
-      "null",
-      "string"
-    ]
-  },
-  "reserved9": {
-    "type": [
-      "null",
-      "string"
-    ]
-  },
-  "reserved10": {
-    "type": [
-      "null",
-      "string"
-    ]
-  }
-}
+		"id": {
+			"type": [
+				"null",
+				"number"
+			],
+			"format": "integer"
+		},
+		"company_account": {
+			"type": [
+				"null",
+				"string"
+			]
+		},
+		"merchant_account": {
+			"type": [
+				"null",
+				"string"
+			]
+		},
+		"psp_reference": {
+			"type": [
+				"null",
+				"string"
+			]
+		},
+		"merchant_reference": {
+			"type": [
+				"null",
+				"string"
+			]
+		},
+		"payment_method": {
+			"type": [
+				"null",
+				"string"
+			]
+		},
+		"booking_date": {
+			"type": [
+				"null",
+				"string"
+			],
+			"format": "date-time"
+		},
+		"timezone": {
+			"type": [
+				"null",
+				"string"
+			]
+		},
+		"main_currency": {
+			"type": [
+				"null",
+				"string"
+			]
+		},
+		"main_amount": {
+			"type": [
+				"null",
+				"number"
+			]
+		},
+		"record_type": {
+			"type": [
+				"null",
+				"string"
+			]
+		},
+		"payment_currency": {
+			"type": [
+				"null",
+				"string"
+			]
+		},
+		"received": {
+			"type": [
+				"null",
+				"number"
+			]
+		},
+		"authorised": {
+			"type": [
+				"null",
+				"number"
+			]
+		},
+		"captured": {
+			"type": [
+				"null",
+				"number"
+			]
+		},
+		"settlement_currency": {
+			"type": [
+				"null",
+				"string"
+			]
+		},
+		"payable": {
+			"type": [
+				"null",
+				"number"
+			]
+		},
+		"commission": {
+			"type": [
+				"null",
+				"number"
+			]
+		},
+		"markup": {
+			"type": [
+				"null",
+				"number"
+			]
+		},
+		"scheme_fees": {
+			"type": [
+				"null",
+				"number"
+			]
+		},
+		"interchange": {
+			"type": [
+				"null",
+				"number"
+			]
+		},
+		"processing_fee_currency": {
+			"type": [
+				"null",
+				"string"
+			]
+		},
+		"processing_fee": {
+			"type": [
+				"null",
+				"number"
+			]
+		},
+		"user_name": {
+			"type": [
+				"null",
+				"string"
+			]
+		},
+		"payment_method_variant": {
+			"type": [
+				"null",
+				"string"
+			]
+		},
+		"modification_merchant_reference": {
+			"type": [
+				"null",
+				"string"
+			]
+		},
+		"network_token_available": {
+			"type": [
+				"null",
+				"boolean"
+			]
+		},
+		"Network Token Used": {
+			"type": [
+				"null",
+				"boolean"
+			]
+		},
+		"reserved3": {
+			"type": [
+				"null",
+				"string"
+			]
+		},
+		"reserved4": {
+			"type": [
+				"null",
+				"string"
+			]
+		},
+		"reserved5": {
+			"type": [
+				"null",
+				"string"
+			]
+		},
+		"reserved6": {
+			"type": [
+				"null",
+				"string"
+			]
+		},
+		"reserved7": {
+			"type": [
+				"null",
+				"string"
+			]
+		},
+		"reserved8": {
+			"type": [
+				"null",
+				"string"
+			]
+		},
+		"reserved9": {
+			"type": [
+				"null",
+				"string"
+			]
+		},
+		"reserved10": {
+			"type": [
+				"null",
+				"string"
+			]
+		}
+	}
 }
